@@ -22,7 +22,7 @@ use crate::error::ClientResult;
 use crate::net::{query_collection, OrderBy, ParamsOfQueryCollection, SortDirection};
 use crate::ClientContext;
 use serde::Serializer;
-use ever_block::ShardIdent;
+use ton_dev_block::ShardIdent;
 
 pub const BLOCK_TRAVERSE_FIELDS: &str = r#"
     id

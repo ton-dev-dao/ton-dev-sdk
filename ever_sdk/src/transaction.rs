@@ -17,11 +17,11 @@ use crate::types::grams_to_u64;
 use crate::types::StringId;
 use crate::{Message, MessageId};
 
-use ever_block::{
+use ton_dev_block::{
     AccStatusChange, ComputeSkipReason, GetRepresentationHash, TrComputePhase,
     TransactionDescr, TransactionProcessingStatus,
 };
-use ever_block::Result;
+use ton_dev_block::Result;
 
 use std::convert::TryFrom;
 
@@ -81,9 +81,9 @@ pub struct Transaction {
     pub total_fees: u64,
 }
 
-impl TryFrom<&ever_block::Transaction> for Transaction {
+impl TryFrom<&ton_dev_block::Transaction> for Transaction {
     type Error = anyhow::Error;
-    fn try_from(transaction: &ever_block::Transaction) -> Result<Self> {
+    fn try_from(transaction: &ton_dev_block::Transaction) -> Result<Self> {
         let descr = if let TransactionDescr::Ordinary(descr) = transaction.read_description()? {
             descr
         } else {

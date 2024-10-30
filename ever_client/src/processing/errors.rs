@@ -14,7 +14,7 @@
 
 use crate::error::{ClientError, format_time};
 use serde_json::Value;
-use ever_block::MsgAddressInt;
+use ton_dev_block::MsgAddressInt;
 
 #[derive(ApiType)]
 pub enum ErrorCode {

@@ -13,11 +13,11 @@
 
 use crate::json_helper;
 use crate::types::{StringId, grams_to_u64};
-use ever_block::Result;
+use ton_dev_block::Result;
 
-use ever_block::GetRepresentationHash;
-use ever_block::{CommonMsgInfo, Message as TvmMessage};
-use ever_block::{Cell, SliceData};
+use ton_dev_block::GetRepresentationHash;
+use ton_dev_block::{CommonMsgInfo, Message as TvmMessage};
+use ton_dev_block::{Cell, SliceData};
 
 #[derive(Deserialize, Debug, PartialEq, Clone)]
 pub enum MessageType {

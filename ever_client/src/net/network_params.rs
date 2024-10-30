@@ -22,7 +22,7 @@ use crate::{
     net::{OrderBy, ParamsOfQueryCollection, ServerLink, SortDirection},
 };
 use std::sync::Arc;
-use ever_block::{Deserializable, GlobalCapabilities};
+use ton_dev_block::{Deserializable, GlobalCapabilities};
 use ever_executor::BlockchainConfig;
 
 #[derive(Serialize, Deserialize, ApiType, Default, Clone)]
@@ -46,7 +46,7 @@ pub(crate) fn offline_config() -> (BlockchainConfig, i32) {
     let bytes = include_bytes!("../default_config.boc");
     (
         BlockchainConfig::with_config(
-            ever_block::ConfigParams::construct_from_bytes(bytes).unwrap()
+            ton_dev_block::ConfigParams::construct_from_bytes(bytes).unwrap()
         ).unwrap(),
         42
     )

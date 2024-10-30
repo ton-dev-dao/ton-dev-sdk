@@ -16,12 +16,12 @@ use crate::error::ClientResult;
 use crate::ClientContext;
 #[allow(unused_imports)]
 use std::str::FromStr;
-use ever_block::{Deserializable, Serializable};
-use ever_block::UInt256;
+use ton_dev_block::{Deserializable, Serializable};
+use ton_dev_block::UInt256;
 
 pub(crate) fn get_boc_hash(boc: &[u8]) -> ClientResult<String> {
     let cells =
-        ever_block::boc::read_single_root_boc(&boc).map_err(|err| Error::invalid_boc(err))?;
+        ton_dev_block::boc::read_single_root_boc(&boc).map_err(|err| Error::invalid_boc(err))?;
     let id: Vec<u8> = cells.repr_hash().as_slice()[..].into();
     Ok(hex::encode(&id))
 }
@@ -29,11 +29,11 @@ pub(crate) fn get_boc_hash(boc: &[u8]) -> ClientResult<String> {
 pub fn deserialize_cell_from_base64(
     b64: &str,
     name: &str,
-) -> ClientResult<(Vec<u8>, ever_block::Cell)> {
+) -> ClientResult<(Vec<u8>, ton_dev_block::Cell)> {
     let bytes = base64::decode(&b64)
         .map_err(|err| Error::invalid_boc(format!("error decode {} BOC base64: {}", name, err)))?;
 
-    let cell = ever_block::boc::read_single_root_boc(&bytes).map_err(|err| {
+    let cell = ton_dev_block::boc::read_single_root_boc(&bytes).map_err(|err| {
         Error::invalid_boc(format!("{} BOC deserialization error: {}", name, err))
     })?;
 
@@ -41,7 +41,7 @@ pub fn deserialize_cell_from_base64(
 }
 
 pub fn deserialize_object_from_cell<S: Deserializable>(
-    cell: ever_block::Cell,
+    cell: ton_dev_block::Cell,
     name: &str,
 ) -> ClientResult<S> {
     let tip = match name {
@@ -65,7 +65,7 @@ pub fn deserialize_object_from_cell<S: Deserializable>(
 
 #[derive(Clone)]
 pub enum DeserializedBoc {
-    Cell(ever_block::Cell),
+    Cell(ton_dev_block::Cell),
     Bytes(Vec<u8>),
 }
 
@@ -81,7 +81,7 @@ impl DeserializedBoc {
 #[derive(Clone)]
 pub struct DeserializedObject<S: Deserializable> {
     pub boc: DeserializedBoc,
-    pub cell: ever_block::Cell,
+    pub cell: ton_dev_block::Cell,
     pub object: S,
 }
 
@@ -102,18 +102,18 @@ pub fn deserialize_object_from_base64<S: Deserializable>(
 pub fn serialize_object_to_cell<S: Serializable>(
     object: &S,
     name: &str,
-) -> ClientResult<ever_block::Cell> {
+) -> ClientResult<ton_dev_block::Cell> {
     Ok(object
         .serialize()
         .map_err(|err| Error::serialization_error(err, name))?)
 }
 
-pub fn serialize_cell_to_bytes(cell: &ever_block::Cell, name: &str) -> ClientResult<Vec<u8>> {
-    ever_block::boc::write_boc(&cell)
+pub fn serialize_cell_to_bytes(cell: &ton_dev_block::Cell, name: &str) -> ClientResult<Vec<u8>> {
+    ton_dev_block::boc::write_boc(&cell)
         .map_err(|err| Error::serialization_error(err, name))
 }
 
-pub fn serialize_cell_to_base64(cell: &ever_block::Cell, name: &str) -> ClientResult<String> {
+pub fn serialize_cell_to_base64(cell: &ton_dev_block::Cell, name: &str) -> ClientResult<String> {
     Ok(base64::encode(&serialize_cell_to_bytes(cell, name)?))
 }
 
@@ -127,7 +127,7 @@ pub fn serialize_object_to_base64<S: Serializable>(
 
 pub fn deserialize_cell_from_boc(
     context: &ClientContext, boc: &str, name: &str
-) -> ClientResult<(DeserializedBoc, ever_block::Cell)> {
+) -> ClientResult<(DeserializedBoc, ton_dev_block::Cell)> {
     context.bocs.deserialize_cell(boc, name)
 }
 
@@ -145,7 +145,7 @@ pub fn deserialize_object_from_boc_bin<S: Deserializable>(
     boc: &[u8],
 ) -> ClientResult<(S, UInt256)> {
     let cell =
-        ever_block::boc::read_single_root_boc(&boc).map_err(|err| Error::invalid_boc(err))?;
+        ton_dev_block::boc::read_single_root_boc(&boc).map_err(|err| Error::invalid_boc(err))?;
     let root_hash = cell.repr_hash();
     let object = S::construct_from_cell(cell).map_err(|err| Error::invalid_boc(err))?;
 
@@ -153,7 +153,7 @@ pub fn deserialize_object_from_boc_bin<S: Deserializable>(
 }
 
 pub fn serialize_cell_to_boc(
-    context: &ClientContext, cell: ever_block::Cell, name: &str, boc_cache: Option<BocCacheType>,
+    context: &ClientContext, cell: ton_dev_block::Cell, name: &str, boc_cache: Option<BocCacheType>,
 ) -> ClientResult<String> {
     if let Some(cache_type) = boc_cache {
         context

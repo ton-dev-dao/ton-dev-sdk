@@ -59,7 +59,7 @@ pub async fn run_get(
     context: Arc<ClientContext>,
     params: ParamsOfRunGet,
 ) -> ClientResult<ResultOfRunGet> {
-    let mut account: ever_block::Account =
+    let mut account: ton_dev_block::Account =
         deserialize_object_from_boc(&context, &params.account, "account")?.object;
     let options = ResolvedExecutionOptions::from_options(&context, params.execution_options).await?;
 

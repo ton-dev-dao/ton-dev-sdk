@@ -4,7 +4,7 @@ use serde_json::json;
 use ever_client::ClientContext;
 use ever_client::net::{OrderBy, ParamsOfQueryCollection, query_collection, SortDirection};
 use ever_client::proofs::{ParamsOfProofBlockData, proof_block_data};
-use ever_block::{Result, UInt256};
+use ton_dev_block::{Result, UInt256};
 
 fn with_project(endpoint: &str) -> String {
     let key = "EVERCLOUD_AUTH_PROJECT";

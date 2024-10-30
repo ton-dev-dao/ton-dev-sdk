@@ -8,8 +8,8 @@ use std::mem;
 use std::sync::{Arc, RwLock};
 use std::time::Duration;
 use tokio::time::sleep;
-use ever_block::MsgAddrStd;
-use ever_block::{AccountId, UInt256};
+use ton_dev_block::MsgAddrStd;
+use ton_dev_block::{AccountId, UInt256};
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn test_fetch() {

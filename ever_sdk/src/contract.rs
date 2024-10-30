@@ -21,10 +21,10 @@ use ever_abi::PublicKeyData;
 use std::convert::{Into, TryInto};
 use std::io::{Read, Seek};
 use ever_abi::json_abi::DecodedMessage;
-use ever_block::{AccountIdPrefixFull, Deserializable, ExternalInboundMessageHeader, GetRepresentationHash,
+use ton_dev_block::{AccountIdPrefixFull, Deserializable, ExternalInboundMessageHeader, GetRepresentationHash,
     Message as TvmMessage, MsgAddressInt, Serializable, ShardIdent, StateInit,
     InternalMessageHeader, CurrencyCollection};
-use ever_block::{error, fail, AccountId, Result, SliceData, BocReader, Ed25519PrivateKey};
+use ton_dev_block::{error, fail, AccountId, Result, SliceData, BocReader, Ed25519PrivateKey};
 
 pub struct Contract {}
 
@@ -105,7 +105,7 @@ impl ContractImage {
         Ok(result)
     }
 
-    pub fn from_cell(cell: ever_block::Cell) -> Result<Self> {
+    pub fn from_cell(cell: ton_dev_block::Cell) -> Result<Self> {
         let id = cell.repr_hash().into();
         let state_init = StateInit::construct_from_cell(cell)?;
 
@@ -135,7 +135,7 @@ impl ContractImage {
 
     pub fn get_serialized_code(&self) -> Result<Vec<u8>> {
         match &self.state_init.code {
-            Some(cell) => ever_block::boc::write_boc(cell),
+            Some(cell) => ton_dev_block::boc::write_boc(cell),
             None => bail!(SdkError::InvalidData {
                 msg: "State init has no code".to_owned()
             }),
@@ -144,7 +144,7 @@ impl ContractImage {
 
     pub fn get_serialized_data(&self) -> Result<Vec<u8>> {
         match &self.state_init.data {
-            Some(cell) => ever_block::boc::write_boc(cell),
+            Some(cell) => ton_dev_block::boc::write_boc(cell),
             None => bail!(SdkError::InvalidData {
                 msg: "State init has no data".to_owned()
             }),
@@ -152,7 +152,7 @@ impl ContractImage {
     }
 
     pub fn serialize(&self) -> Result<Vec<u8>> {
-        ever_block::boc::write_boc(&self.state_init.serialize()?)
+        ton_dev_block::boc::write_boc(&self.state_init.serialize()?)
     }
 
     // Returns future contract's state_init struct
@@ -692,14 +692,14 @@ impl Contract {
     pub fn serialize_message(msg: &TvmMessage) -> Result<(Vec<u8>, MessageId)> {
         let cells = msg.write_to_new_cell()?.into_cell()?;
         Ok((
-            ever_block::boc::write_boc(&cells)?,
+            ton_dev_block::boc::write_boc(&cells)?,
             (&cells.repr_hash().as_slice()[..]).into(),
         ))
     }
 
     /// Deserializes tree of cells from byte array into `SliceData`
     pub fn deserialize_tree_to_slice(data: &[u8]) -> Result<SliceData> {
-        SliceData::load_cell(ever_block::boc::read_single_root_boc(&data)?)
+        SliceData::load_cell(ton_dev_block::boc::read_single_root_boc(&data)?)
     }
 
     pub fn get_dst_from_msg(msg: &[u8]) -> Result<MsgAddressInt> {

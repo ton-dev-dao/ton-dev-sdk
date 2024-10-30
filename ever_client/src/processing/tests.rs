@@ -18,7 +18,7 @@ use crate::tvm::{AccountForExecutor, ParamsOfRunExecutor, ResultOfRunExecutor};
 use crate::utils::conversion::abi_uint;
 use api_info::ApiModule;
 use ever_struct::scheme::TVC;
-use ever_block::{Serializable, StateInit};
+use ton_dev_block::{Serializable, StateInit};
 
 fn processing_event_name(e: Option<&ProcessingEvent>) -> &str {
     if let Some(e) = e {

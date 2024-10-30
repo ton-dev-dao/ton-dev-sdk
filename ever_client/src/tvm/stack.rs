@@ -18,7 +18,7 @@ use crate::error::ClientResult;
 use crate::tvm::Error;
 use core::result::Result::{Err, Ok};
 use serde_json::Value;
-use ever_block::BuilderData;
+use ton_dev_block::BuilderData;
 use std::ops::Deref;
 use std::slice::Iter;
 use ever_vm::stack::{continuation::ContinuationData, integer::IntegerData};

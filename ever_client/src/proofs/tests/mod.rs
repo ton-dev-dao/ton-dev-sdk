@@ -5,11 +5,11 @@ use std::sync::Arc;
 use anyhow::bail;
 use graphql_parser::schema::{Definition, ObjectType, Type, TypeDefinition};
 use serde_json::Value;
-use ever_block::{
+use ton_dev_block::{
     BinTreeType, Block, BlockIdExt, Deserializable, InRefValue, ShardHashes, ShardIdent,
     ShardStateUnsplit, MASTERCHAIN_ID,
 };
-use ever_block::{Result, UInt256};
+use ton_dev_block::{Result, UInt256};
 
 use crate::client::storage::InMemoryKeyValueStorage;
 use crate::net::{query_collection, ParamsOfQueryCollection};
@@ -111,7 +111,7 @@ fn test_validator_set() -> Result<()> {
             &vset,
             config,
             &cc_config,
-            ever_block::SHARD_FULL,
+            ton_dev_block::SHARD_FULL,
             workchain_id,
             cc_seqno,
             0.into(),

@@ -11,7 +11,7 @@ use futures::{FutureExt, StreamExt};
 use std::convert::TryInto;
 use std::sync::Arc;
 use tokio::sync::mpsc;
-use ever_block::{Message, MsgAddressInt};
+use ton_dev_block::{Message, MsgAddressInt};
 
 //--------------------------------------------------------------------------- wait_for_transaction
 

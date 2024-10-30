@@ -5,7 +5,7 @@ use crate::boc::internal::{deserialize_object_from_base64, serialize_object_to_b
 use crate::encoding::account_decode;
 use crate::error::ClientError;
 use std::collections::VecDeque;
-use ever_block::{Message, MsgAddressInt};
+use ton_dev_block::{Message, MsgAddressInt};
 
 #[derive(Default)]
 pub(super) struct RunOutput {

@@ -30,7 +30,7 @@ use std::pin::Pin;
 use std::sync::atomic::{AtomicBool, AtomicU32, Ordering};
 use std::sync::Arc;
 use tokio::sync::{watch, Mutex, RwLock};
-use ever_block::UInt256;
+use ton_dev_block::UInt256;
 
 use super::ErrorCode;
 

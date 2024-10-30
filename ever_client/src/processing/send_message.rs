@@ -23,7 +23,7 @@ use crate::processing::internal::get_message_expiration_time;
 use crate::processing::types::ProcessingEvent;
 use crate::processing::Error;
 use std::sync::Arc;
-use ever_block::{Message, MsgAddressInt};
+use ton_dev_block::{Message, MsgAddressInt};
 
 #[derive(Serialize, Deserialize, ApiType, Default, Debug, Clone)]
 pub struct ParamsOfSendMessage {

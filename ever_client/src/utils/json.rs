@@ -1,6 +1,6 @@
 use anyhow::format_err;
 use serde_json::Value;
-use ever_block::Result;
+use ton_dev_block::Result;
 
 pub trait JsonHelper {
     fn get_u64(&self, field: &str) -> Result<u64>;

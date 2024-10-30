@@ -11,8 +11,8 @@
 * limitations under the License.
 */
 
-use ever_block::{Number5, StateInit, StateInitLib, TickTock, SERDE_OPTS_EMPTY};
-use ever_block::{BuilderData, Cell};
+use ton_dev_block::{Number5, StateInit, StateInitLib, TickTock, SERDE_OPTS_EMPTY};
+use ton_dev_block::{BuilderData, Cell};
 
 use super::BocCacheType;
 use crate::boc::internal::{

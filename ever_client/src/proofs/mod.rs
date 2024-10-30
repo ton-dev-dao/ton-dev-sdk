@@ -6,13 +6,13 @@ use std::sync::Arc;
 use anyhow::{bail, format_err};
 use serde::{Deserialize, Deserializer};
 use serde_json::Value;
-use ever_block::{
+use ton_dev_block::{
     Block, BlockIdExt, BlockInfo, CryptoSignature, CryptoSignaturePair, Deserializable,
     HashmapAugType, MerkleProof, Message, ShardIdent, ShardStateUnsplit, Transaction,
     ValidatorDescr,
 };
-use ever_block::{Cell, UInt256, SliceData};
-use ever_block::Result;
+use ton_dev_block::{Cell, UInt256, SliceData};
+use ton_dev_block::Result;
 
 pub(crate) use errors::ErrorCode;
 
@@ -524,7 +524,7 @@ impl BlockProof {
         let signatures_json = &value["signatures"];
         let root_boc = base64::decode(signatures_json.get_str("proof")?)?;
 
-        let root = ever_block::boc::read_single_root_boc(&root_boc)?;
+        let root = ton_dev_block::boc::read_single_root_boc(&root_boc)?;
 
         let mut pure_signatures = Vec::new();
         let signatures_json_vec = signatures_json.get_array("signatures")?;
@@ -553,12 +553,12 @@ impl BlockProof {
     }
 
     pub fn deserialize(data: &[u8]) -> Result<Self> {
-        let proof = ever_block::BlockProof::construct_from_bytes(data)?;
+        let proof = ton_dev_block::BlockProof::construct_from_bytes(data)?;
         let signatures = proof.signatures
             .ok_or_else(|| format_err!("Signatures must be filled"))?;
 
         let mut pure_signatures = Vec::new();
-        ever_block::HashmapType::iterate_slices(signatures.pure_signatures.signatures(),
+        ton_dev_block::HashmapType::iterate_slices(signatures.pure_signatures.signatures(),
             |ref mut _key, ref mut slice| {
                 pure_signatures.push(CryptoSignaturePair::construct_from(slice)?);
                 Ok(true)

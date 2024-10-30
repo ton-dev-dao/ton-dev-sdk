@@ -6,9 +6,9 @@ use std::time::Duration;
 
 use chrono::{DateTime, Utc};
 use serde_json::{Map, Value};
-use ever_block::{Block, Message, Transaction};
+use ton_dev_block::{Block, Message, Transaction};
 use ever_block_json::{BlockSerializationSet, MessageSerializationSet, TransactionSerializationSet};
-use ever_block::{Result, UInt256};
+use ton_dev_block::{Result, UInt256};
 
 use crate::error::ClientResult;
 use crate::proofs::errors::Error;
@@ -427,7 +427,7 @@ pub(crate) fn serialize_block(
         &BlockSerializationSet {
             block,
             id,
-            status: ever_block::BlockProcessingStatus::Finalized,
+            status: ton_dev_block::BlockProcessingStatus::Finalized,
             boc
         },
         ever_block_json::SerializationMode::QServer,
@@ -454,7 +454,7 @@ pub(crate) fn serialize_transaction(
         &TransactionSerializationSet {
             transaction,
             id,
-            status: ever_block::TransactionProcessingStatus::Finalized,
+            status: ton_dev_block::TransactionProcessingStatus::Finalized,
             block_id: Some(block_id),
             workchain_id,
             boc,
@@ -495,7 +495,7 @@ pub(crate) fn serialize_message(
             block_id: None,
             transaction_id: None,
             transaction_now: None,
-            status: ever_block::MessageProcessingStatus::Finalized,
+            status: ton_dev_block::MessageProcessingStatus::Finalized,
             boc,
             proof: None,
         },

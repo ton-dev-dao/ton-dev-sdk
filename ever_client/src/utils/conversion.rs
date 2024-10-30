@@ -16,7 +16,7 @@ use crate::client::ClientContext;
 use crate::encoding::{account_decode, account_encode_ex, AccountAddressType, Base64AddressParams, decode_std_base64};
 use crate::error::ClientResult;
 use std::sync::Arc;
-use ever_block::MsgAddressInt;
+use ton_dev_block::MsgAddressInt;
 
 use std::str::FromStr;
 

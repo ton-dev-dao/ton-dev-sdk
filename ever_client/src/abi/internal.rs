@@ -8,7 +8,7 @@ use ever_abi::PublicKeyData;
 use std::convert::TryInto;
 use std::sync::Arc;
 use ever_sdk::ContractImage;
-use ever_block::Cell;
+use ton_dev_block::Cell;
 
 /// Combines `hex` encoded `signature` with `base64` encoded `unsigned_message`.
 /// Returns signed message encoded with `base64`.
@@ -46,7 +46,7 @@ pub(crate) fn add_sign_to_message_body(
         unsigned,
     )
     .map_err(|err| Error::attach_signature_failed(err))?;
-    Ok(ever_block::boc::write_boc(
+    Ok(ton_dev_block::boc::write_boc(
         &body
             .into_cell()
             .map_err(|err| Error::attach_signature_failed(err))?,
@@ -100,7 +100,7 @@ pub(crate) fn create_tvc_image(
 
 /// Determines, if public key consists only zeroes, i.e. is empty.
 pub(crate) fn is_empty_pubkey(pubkey: &PublicKeyData) -> bool {
-    pubkey == &[0; ever_block::ED25519_PUBLIC_KEY_LENGTH]
+    pubkey == &[0; ton_dev_block::ED25519_PUBLIC_KEY_LENGTH]
 }
 
 /// Resolves public key from deploy set, tvc or signer, using this priority:

@@ -9,7 +9,7 @@ use std::sync::Arc;
 use ever_abi::contract::DecodedMessage;
 use ever_abi::token::Detokenizer;
 use ever_sdk::{AbiContract, AbiFunction, AbiEvent};
-use ever_block::SliceData;
+use ton_dev_block::SliceData;
 
 use super::types::extend_data_to_sign;
 
@@ -69,7 +69,7 @@ impl DecodedMessageBody {
         body_type: MessageBodyType,
         decoded: DecodedMessage,
         header: Option<FunctionHeader>,
-    ) -> ever_block::Result<Self> {
+    ) -> ton_dev_block::Result<Self> {
         let value = Detokenizer::detokenize_to_json_value(&decoded.tokens)?;
         Ok(Self {
             body_type,
@@ -115,9 +115,9 @@ pub fn decode_message(
     let (abi, message) = prepare_decode(&context, &params)?;
     if let Some(body) = message.body() {
         let data_layout = match message.header() {
-            ever_block::CommonMsgInfo::ExtInMsgInfo(_) => Some(DataLayout::Input),
-            ever_block::CommonMsgInfo::ExtOutMsgInfo(_) => Some(DataLayout::Output),
-            ever_block::CommonMsgInfo::IntMsgInfo(_) => params.data_layout,
+            ton_dev_block::CommonMsgInfo::ExtInMsgInfo(_) => Some(DataLayout::Input),
+            ton_dev_block::CommonMsgInfo::ExtOutMsgInfo(_) => Some(DataLayout::Output),
+            ton_dev_block::CommonMsgInfo::IntMsgInfo(_) => params.data_layout,
         };
         decode_body(abi, body, message.is_internal(), params.allow_partial, params.function_name, data_layout)
     } else {
@@ -170,7 +170,7 @@ pub fn decode_message_body(
 fn prepare_decode(
     context: &ClientContext,
     params: &ParamsOfDecodeMessage,
-) -> ClientResult<(AbiContract, ever_block::Message)> {
+) -> ClientResult<(AbiContract, ton_dev_block::Message)> {
     let abi = params.abi.abi()?;
     let message = deserialize_object_from_boc(context, &params.message, "message")
         .map_err(|x| Error::invalid_message_for_decode(x))?;
@@ -357,7 +357,7 @@ pub async fn get_signature_data(
     params: ParamsOfGetSignatureData,
 ) -> ClientResult<ResultOfGetSignatureData> {
     let abi = params.abi.abi()?;
-    let message: ever_block::Message = deserialize_object_from_boc(&context, &params.message, "message")?.object;
+    let message: ton_dev_block::Message = deserialize_object_from_boc(&context, &params.message, "message")?.object;
     if let Some(body) = message.body() {
         let address = message.dst()
             .ok_or_else(|| Error::invalid_message_for_decode(

@@ -4,14 +4,14 @@ use std::sync::Arc;
 use ever_abi::{Param, ParamType, Token, TokenValue};
 use ever_abi::contract::AbiVersion;
 use ever_abi::token::{Cursor, Detokenizer};
-use ever_block::{HashmapE, HashmapType, Serializable, SliceData, fail, BuilderData};
-use ever_block::Result;
+use ton_dev_block::{HashmapE, HashmapType, Serializable, SliceData, fail, BuilderData};
+use ton_dev_block::Result;
 use ever_vm::int;
 use ever_vm::stack::integer::IntegerData;
 use ever_vm::stack::integer::serialization::{UnsignedIntegerBigEndianEncoding, SignedIntegerBigEndianEncoding};
 use ever_vm::stack::StackItem;
 use num_bigint::{BigInt};
-use ever_block::IBitstring;
+use ton_dev_block::IBitstring;
 
 use crate::abi::Error;
 use crate::ClientContext;

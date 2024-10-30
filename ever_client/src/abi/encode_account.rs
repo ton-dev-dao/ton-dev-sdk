@@ -3,7 +3,7 @@ use crate::abi::Error;
 use crate::client::ClientContext;
 use crate::error::ClientResult;
 use std::sync::Arc;
-use ever_block::{Account, CurrencyCollection, MsgAddressInt};
+use ton_dev_block::{Account, CurrencyCollection, MsgAddressInt};
 
 //--------------------------------------------------------------------------------- encode_account
 

@@ -12,7 +12,7 @@
  *
  */
 
-use ever_block::ShardIdent;
+use ton_dev_block::ShardIdent;
 
 use crate::error::ClientResult;
 use crate::net::iterators::block::{shard_ident_parse, BlockFields};

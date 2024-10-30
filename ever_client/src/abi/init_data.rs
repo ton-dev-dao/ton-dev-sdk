@@ -10,7 +10,7 @@ use serde_json;
 use serde_json::Value;
 use std::convert::TryInto;
 use std::sync::Arc;
-use ever_block::{Cell, SliceData};
+use ton_dev_block::{Cell, SliceData};
 
 #[derive(Serialize, Deserialize, ApiType, Default, Debug)]
 pub struct ParamsOfUpdateInitialData {
@@ -98,7 +98,7 @@ fn update_initial_data_internal(
 }
 
 fn default_init_data() -> ClientResult<Cell> {
-    ever_abi::Contract::insert_pubkey(Default::default(), &[0; ever_block::ED25519_PUBLIC_KEY_LENGTH])
+    ever_abi::Contract::insert_pubkey(Default::default(), &[0; ton_dev_block::ED25519_PUBLIC_KEY_LENGTH])
         .map_err(|err| Error::encode_init_data_failed(err))
         .map(SliceData::into_cell)
 }

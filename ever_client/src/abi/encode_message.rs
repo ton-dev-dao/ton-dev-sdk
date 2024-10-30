@@ -12,9 +12,9 @@ use serde_json::Value;
 use std::str::FromStr;
 use std::sync::Arc;
 use ever_abi::Contract;
-use ever_block::{CurrencyCollection, MsgAddressInt};
+use ton_dev_block::{CurrencyCollection, MsgAddressInt};
 use ever_sdk::{ContractImage, FunctionCallSet};
-use ever_block::Cell;
+use ton_dev_block::Cell;
 
 use super::types::extend_data_to_sign;
 
@@ -850,7 +850,7 @@ pub async fn encode_message_body(
         }
         .map_err(|err| Error::encode_run_message_failed(err, Some(&func)))?,
     };
-    let body: Vec<u8> = ever_block::boc::write_boc(
+    let body: Vec<u8> = ton_dev_block::boc::write_boc(
         &body
             .clone()
             .into_cell()

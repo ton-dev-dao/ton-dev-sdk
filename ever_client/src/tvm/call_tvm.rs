@@ -15,11 +15,11 @@
 use super::types::ResolvedExecutionOptions;
 use crate::{error::ClientResult, encoding::slice_from_cell};
 use crate::tvm::Error;
-use ever_block::{
+use ton_dev_block::{
     Account, CommonMsgInfo, ConfigParams, CurrencyCollection, Deserializable,
     Message, MsgAddressInt, OutAction, OutActions, Serializable,
 };
-use ever_block::{Cell, HashmapType, SliceData, UInt256};
+use ton_dev_block::{Cell, HashmapType, SliceData, UInt256};
 use ever_vm::{
     executor::{gas::gas_state::Gas, Engine},
     stack::{integer::IntegerData, savelist::SaveList, Stack, StackItem},
@@ -116,7 +116,7 @@ pub(crate) fn call_tvm(
             } else {
                 !(exception
                     .exception_code()
-                    .unwrap_or(ever_block::ExceptionCode::UnknownError) as i32)
+                    .unwrap_or(ton_dev_block::ExceptionCode::UnknownError) as i32)
             };
 
             let exit_arg = super::stack::serialize_item(&exception.value)?;

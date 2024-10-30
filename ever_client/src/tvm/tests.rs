@@ -32,9 +32,9 @@ use crate::processing::{ParamsOfProcessMessage, ResultOfProcessMessage};
 use crate::tests::{TestClient, EXCEPTION, HELLO, SUBSCRIBE};
 use api_info::ApiModule;
 use serde_json::Value;
-use ever_block::{GlobalCapabilities, ConfigParamEnum, Serializable, ConfigParam8};
+use ton_dev_block::{GlobalCapabilities, ConfigParamEnum, Serializable, ConfigParam8};
 use std::sync::Arc;
-use ever_block::{BuilderData, Cell, SliceData};
+use ton_dev_block::{BuilderData, Cell, SliceData};
 use ever_vm::stack::{continuation::ContinuationData, StackItem};
 
 const ELECTOR_ADDRESS: &str = "-1:3333333333333333333333333333333333333333333333333333333333333333";

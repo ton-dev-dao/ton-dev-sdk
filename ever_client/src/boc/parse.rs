@@ -16,7 +16,7 @@ use crate::boc::Error;
 use crate::client::ClientContext;
 use crate::error::ClientResult;
 use serde_json::Value;
-use ever_block::Deserializable;
+use ton_dev_block::Deserializable;
 
 use super::internal::{deserialize_cell_from_boc, deserialize_object_from_cell};
 
@@ -50,7 +50,7 @@ pub fn parse_message(
     context: std::sync::Arc<ClientContext>,
     params: ParamsOfParse,
 ) -> ClientResult<ResultOfParse> {
-    let object = deserialize_object_from_boc::<ever_block::Message>(&context, &params.boc, "message")?;
+    let object = deserialize_object_from_boc::<ton_dev_block::Message>(&context, &params.boc, "message")?;
 
     let set = ever_block_json::MessageSerializationSet {
         block_id: None,
@@ -58,7 +58,7 @@ pub fn parse_message(
         id: object.cell.repr_hash(),
         message: object.object,
         proof: None,
-        status: ever_block::MessageProcessingStatus::Finalized,
+        status: ton_dev_block::MessageProcessingStatus::Finalized,
         transaction_id: None,
         transaction_now: None,
         ..Default::default()
@@ -85,7 +85,7 @@ pub fn parse_transaction(
     params: ParamsOfParse,
 ) -> ClientResult<ResultOfParse> {
     let object =
-        deserialize_object_from_boc::<ever_block::Transaction>(&context, &params.boc, "transaction")?;
+        deserialize_object_from_boc::<ton_dev_block::Transaction>(&context, &params.boc, "transaction")?;
 
     let set = ever_block_json::TransactionSerializationSetEx {
         block_id: None,
@@ -93,7 +93,7 @@ pub fn parse_transaction(
         id: &object.cell.repr_hash(),
         transaction: &object.object,
         proof: None,
-        status: ever_block::TransactionProcessingStatus::Finalized,
+        status: ton_dev_block::TransactionProcessingStatus::Finalized,
         workchain_id: None
     };
 
@@ -119,8 +119,8 @@ pub fn parse_account(
 ) -> ClientResult<ResultOfParse> {
     let (boc, cell) = deserialize_cell_from_boc(&context, &params.boc, "account")?;
 
-    let account = if cell.cell_type() == ever_block::CellType::MerkleProof {
-        let proof = ever_block::MerkleProof::construct_from_cell(cell)
+    let account = if cell.cell_type() == ton_dev_block::CellType::MerkleProof {
+        let proof = ton_dev_block::MerkleProof::construct_from_cell(cell)
             .map_err(|err| Error::invalid_boc(format!("Can not deserialize Merkle proof from pruned account BOC: {}", err)))?;
         proof.virtualize()
             .map_err(|err| Error::invalid_boc(format!("Can not virtualize pruned account from Merkle proof: {}", err)))?
@@ -155,13 +155,13 @@ pub fn parse_block(
     context: std::sync::Arc<ClientContext>,
     params: ParamsOfParse,
 ) -> ClientResult<ResultOfParse> {
-    let object = deserialize_object_from_boc::<ever_block::Block>(&context, &params.boc, "block")?;
+    let object = deserialize_object_from_boc::<ton_dev_block::Block>(&context, &params.boc, "block")?;
 
     let set = ever_block_json::BlockSerializationSet {
         boc: object.boc.bytes("block")?,
         id: object.cell.repr_hash(),
         block: object.object,
-        status: ever_block::BlockProcessingStatus::Finalized,
+        status: ton_dev_block::BlockProcessingStatus::Finalized,
         ..Default::default()
     };
 
@@ -186,7 +186,7 @@ pub fn parse_shardstate(
     params: ParamsOfParseShardstate,
 ) -> ClientResult<ResultOfParse> {
     let object =
-        deserialize_object_from_boc::<ever_block::ShardStateUnsplit>(&context, &params.boc, "shardstate")?;
+        deserialize_object_from_boc::<ton_dev_block::ShardStateUnsplit>(&context, &params.boc, "shardstate")?;
 
     let set = ever_block_json::ShardStateSerializationSet {
         boc: object.boc.bytes("shardstate")?,

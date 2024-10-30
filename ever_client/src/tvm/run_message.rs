@@ -27,12 +27,12 @@ use crate::{abi::Abi, boc::BocCacheType};
 use serde_json::Value;
 use std::convert::TryFrom;
 use std::sync::{atomic::AtomicU64, Arc};
-use ever_block::{Account, CurrencyCollection, Message, MsgAddressInt, Serializable, Transaction};
+use ton_dev_block::{Account, CurrencyCollection, Message, MsgAddressInt, Serializable, Transaction};
 use ever_executor::{
     ExecuteParams, ExecutorError, OrdinaryTransactionExecutor, TransactionExecutor,
 };
 use ever_sdk::TransactionFees;
-use ever_block::{Cell, UInt256};
+use ton_dev_block::{Cell, UInt256};
 use ever_vm::stack::StackItem;
 
 #[derive(Serialize, Deserialize, ApiType, Debug, Clone)]
@@ -436,7 +436,7 @@ where
         signature_id: options.signature_id,
         ..ExecuteParams::default()
     };
-    let msg = ever_block::CommonMessage::Std(msg);
+    let msg = ton_dev_block::CommonMessage::Std(msg);
     let transaction =
         match executor.execute_with_libs_and_params(Some(&msg), &mut account_root, params) {
             Ok(transaction) => transaction,

@@ -5,11 +5,11 @@ use std::fmt::{Display, Formatter};
 // use ed25519_dalek::Digest;
 use anyhow::bail;
 use sha2::Digest;
-use ever_block::{
+use ton_dev_block::{
     CatchainConfig, ConfigParams, UnixTime32, ValidatorDescr, ValidatorSet, WorkchainDescr,
     Workchains,
 };
-use ever_block::Result;
+use ton_dev_block::Result;
 
 use crate::proofs::Signatures;
 
