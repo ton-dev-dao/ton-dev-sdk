@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["ever_client"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/convert/trait.Into.html\" title=\"trait core::convert::Into\">Into</a>&lt;<a class=\"struct\" href=\"ever_client/debot/struct.DAction.html\" title=\"struct ever_client::debot::DAction\">DAction</a>&gt; for <a class=\"struct\" href=\"ever_client/debot/struct.DebotAction.html\" title=\"struct ever_client::debot::DebotAction\">DebotAction</a>","synthetic":false,"types":["ever_client::debot::DebotAction"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
