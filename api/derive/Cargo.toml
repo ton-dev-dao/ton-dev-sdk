@@ -1,0 +1,15 @@
+[package]
+edition = '2018'
+name = 'api_derive'
+version = '1.48.1'
+
+[dependencies]
+proc-macro2 = '1.0.52'
+quote = '1.0.26'
+serde_json = '1.0.57'
+syn = { features = [ 'full' ], version = '1.0.109' }
+api_info = { path = '../info' }
+
+[lib]
+proc-macro = true
+
