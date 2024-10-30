@@ -4,10 +4,10 @@ use crate::encoding::hex_decode;
 use crate::error::ClientResult;
 use crate::ClientContext;
 use serde_json::Value;
-use ever_abi::PublicKeyData;
+use ton_dev_abi::PublicKeyData;
 use std::convert::TryInto;
 use std::sync::Arc;
-use ever_sdk::ContractImage;
+use ton_dev_sdk::ContractImage;
 use ton_dev_block::Cell;
 
 /// Combines `hex` encoded `signature` with `base64` encoded `unsigned_message`.
@@ -19,7 +19,7 @@ pub(crate) fn add_sign_to_message(
     unsigned_message: &[u8],
 ) -> ClientResult<Vec<u8>> {
     let signed =
-        ever_sdk::Contract::add_sign_to_message(abi, signature, public_key, unsigned_message)
+        ton_dev_sdk::Contract::add_sign_to_message(abi, signature, public_key, unsigned_message)
             .map_err(|err| Error::attach_signature_failed(err))?;
     Ok(signed.serialized_message)
 }
@@ -32,9 +32,9 @@ pub(crate) fn add_sign_to_message_body(
     public_key: Option<&[u8]>,
     unsigned_body: &[u8],
 ) -> ClientResult<Vec<u8>> {
-    let unsigned = ever_sdk::Contract::deserialize_tree_to_slice(unsigned_body)
+    let unsigned = ton_dev_sdk::Contract::deserialize_tree_to_slice(unsigned_body)
         .map_err(|err| Error::attach_signature_failed(err))?;
-    let body = ever_abi::add_sign_to_function_call(
+    let body = ton_dev_abi::add_sign_to_function_call(
         abi,
         signature
             .try_into()

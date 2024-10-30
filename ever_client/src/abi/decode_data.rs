@@ -7,7 +7,7 @@ use crate::error::ClientResult;
 use serde_json;
 use serde_json::Value;
 use std::sync::Arc;
-use ever_abi::token::Detokenizer;
+use ton_dev_abi::token::Detokenizer;
 
 #[derive(Serialize, Deserialize, ApiType, Default)]
 pub struct ParamsOfDecodeAccountData {

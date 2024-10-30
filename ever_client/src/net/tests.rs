@@ -377,7 +377,7 @@ async fn ranges() {
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn wait_for() {
-    let now = ever_sdk::Contract::now();
+    let now = ton_dev_sdk::Contract::now();
     let request = tokio::spawn(async move {
         let client = TestClient::new();
         let transactions: ResultOfWaitForCollection = client
@@ -527,7 +527,7 @@ async fn subscribe_for_transactions_with_addresses() {
                 collection: "transactions".to_owned(),
                 filter: Some(json!({
                     "account_addr": { "eq": msg.address.clone() },
-                    "status": { "eq": ever_sdk::json_helper::transaction_status_to_u8(ton_dev_block::TransactionProcessingStatus::Finalized) }
+                    "status": { "eq": ton_dev_sdk::json_helper::transaction_status_to_u8(ton_dev_block::TransactionProcessingStatus::Finalized) }
                 })),
                 result: "id account_addr status".to_owned(),
             },
@@ -586,7 +586,7 @@ async fn subscribe_for_transactions_with_addresses() {
                 collection: "transactions".to_owned(),
                 filter: Some(json!({
                     "account_addr": { "eq": msg.address.clone() },
-                    "status": { "eq": ever_sdk::json_helper::transaction_status_to_u8(ton_dev_block::TransactionProcessingStatus::Finalized) }
+                    "status": { "eq": ton_dev_sdk::json_helper::transaction_status_to_u8(ton_dev_block::TransactionProcessingStatus::Finalized) }
                 })),
                 result: "id account_addr status".to_owned(),
             },

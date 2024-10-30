@@ -13,7 +13,7 @@
  */
 
 use serde_json::Value;
-use ever_client::error::ClientError;
+use ton_dev_client::error::ClientError;
 
 pub type CliResult<R> = Result<R, CliError>;
 

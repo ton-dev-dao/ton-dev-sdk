@@ -7,7 +7,7 @@ use std::time::Duration;
 use chrono::{DateTime, Utc};
 use serde_json::{Map, Value};
 use ton_dev_block::{Block, Message, Transaction};
-use ever_block_json::{BlockSerializationSet, MessageSerializationSet, TransactionSerializationSet};
+use ton_dev_block_json::{BlockSerializationSet, MessageSerializationSet, TransactionSerializationSet};
 use ton_dev_block::{Result, UInt256};
 
 use crate::error::ClientResult;
@@ -422,7 +422,7 @@ pub(crate) fn serialize_block(
     block: Block,
     boc: Vec<u8>,
 ) -> Result<Value> {
-    let mut value = ever_block_json::db_serialize_block_ex(
+    let mut value = ton_dev_block_json::db_serialize_block_ex(
         "id",
         &BlockSerializationSet {
             block,
@@ -430,7 +430,7 @@ pub(crate) fn serialize_block(
             status: ton_dev_block::BlockProcessingStatus::Finalized,
             boc
         },
-        ever_block_json::SerializationMode::QServer,
+        ton_dev_block_json::SerializationMode::QServer,
     )?.into();
 
     add_time_strings(
@@ -449,7 +449,7 @@ pub(crate) fn serialize_transaction(
     workchain_id: i32,
     boc: Vec<u8>,
 ) -> Result<Value> {
-    let mut value = ever_block_json::db_serialize_transaction_ex(
+    let mut value = ton_dev_block_json::db_serialize_transaction_ex(
         "id",
         &TransactionSerializationSet {
             transaction,
@@ -460,7 +460,7 @@ pub(crate) fn serialize_transaction(
             boc,
             proof: None,
         },
-        ever_block_json::SerializationMode::QServer,
+        ton_dev_block_json::SerializationMode::QServer,
     )?.into();
 
     add_time_strings(
@@ -487,7 +487,7 @@ pub(crate) fn serialize_message(
     message: Message,
     boc: Vec<u8>,
 ) -> Result<Value> {
-    let mut value = ever_block_json::db_serialize_message_ex(
+    let mut value = ton_dev_block_json::db_serialize_message_ex(
         "id",
         &MessageSerializationSet {
             message,
@@ -499,7 +499,7 @@ pub(crate) fn serialize_message(
             boc,
             proof: None,
         },
-        ever_block_json::SerializationMode::QServer,
+        ton_dev_block_json::SerializationMode::QServer,
     )?.into();
 
     add_time_strings(

@@ -14,7 +14,7 @@
 use super::errors::Error;
 use crate::error::ClientResult;
 use ton_dev_block::AccStatusChange;
-use ever_sdk::Transaction;
+use ton_dev_sdk::Transaction;
 
 pub(crate) async fn calc_transaction_fees<F>(
     transaction: &Transaction,
@@ -22,7 +22,7 @@ pub(crate) async fn calc_transaction_fees<F>(
     skip_check: bool,
     contract_info: impl FnOnce() -> F,
     show_tips_on_error: bool,
-) -> ClientResult<ever_sdk::TransactionFees>
+) -> ClientResult<ton_dev_sdk::TransactionFees>
 where
     F: futures::Future<Output = ClientResult<(ton_dev_block::MsgAddressInt, u64)>>,
 {

@@ -30,5 +30,5 @@ pub use run_message::{
     ResultOfRunExecutor, ResultOfRunTvm,
 };
 pub(crate) use run_message::run_executor_internal;
-pub use ever_sdk::TransactionFees;
+pub use ton_dev_sdk::TransactionFees;
 pub use types::ExecutionOptions;

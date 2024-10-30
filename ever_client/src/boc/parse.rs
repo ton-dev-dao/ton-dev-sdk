@@ -52,7 +52,7 @@ pub fn parse_message(
 ) -> ClientResult<ResultOfParse> {
     let object = deserialize_object_from_boc::<ton_dev_block::Message>(&context, &params.boc, "message")?;
 
-    let set = ever_block_json::MessageSerializationSet {
+    let set = ton_dev_block_json::MessageSerializationSet {
         block_id: None,
         boc: object.boc.bytes("message")?,
         id: object.cell.repr_hash(),
@@ -64,10 +64,10 @@ pub fn parse_message(
         ..Default::default()
     };
 
-    let parsed = ever_block_json::db_serialize_message_ex(
+    let parsed = ton_dev_block_json::db_serialize_message_ex(
         "id",
         &set,
-        ever_block_json::SerializationMode::QServer,
+        ton_dev_block_json::SerializationMode::QServer,
     )
     .map_err(|err| Error::serialization_error(err, "message"))?;
 
@@ -87,7 +87,7 @@ pub fn parse_transaction(
     let object =
         deserialize_object_from_boc::<ton_dev_block::Transaction>(&context, &params.boc, "transaction")?;
 
-    let set = ever_block_json::TransactionSerializationSetEx {
+    let set = ton_dev_block_json::TransactionSerializationSetEx {
         block_id: None,
         boc: &object.boc.bytes("transaction")?,
         id: &object.cell.repr_hash(),
@@ -97,10 +97,10 @@ pub fn parse_transaction(
         workchain_id: None
     };
 
-    let parsed = ever_block_json::db_serialize_transaction_ex(
+    let parsed = ton_dev_block_json::db_serialize_transaction_ex(
         "id",
         set,
-        ever_block_json::SerializationMode::QServer,
+        ton_dev_block_json::SerializationMode::QServer,
     )
     .map_err(|err| Error::serialization_error(err, "transaction"))?;
 
@@ -128,17 +128,17 @@ pub fn parse_account(
         deserialize_object_from_cell(cell, "account")?
     };
 
-    let set = ever_block_json::AccountSerializationSet {
+    let set = ton_dev_block_json::AccountSerializationSet {
         boc: boc.bytes("account")?,
         proof: None,
         account,
         ..Default::default()
     };
 
-    let parsed = ever_block_json::db_serialize_account_ex(
+    let parsed = ton_dev_block_json::db_serialize_account_ex(
         "id",
         &set,
-        ever_block_json::SerializationMode::QServer,
+        ton_dev_block_json::SerializationMode::QServer,
     )
     .map_err(|err| Error::serialization_error(err, "account"))?;
 
@@ -157,7 +157,7 @@ pub fn parse_block(
 ) -> ClientResult<ResultOfParse> {
     let object = deserialize_object_from_boc::<ton_dev_block::Block>(&context, &params.boc, "block")?;
 
-    let set = ever_block_json::BlockSerializationSet {
+    let set = ton_dev_block_json::BlockSerializationSet {
         boc: object.boc.bytes("block")?,
         id: object.cell.repr_hash(),
         block: object.object,
@@ -165,10 +165,10 @@ pub fn parse_block(
         ..Default::default()
     };
 
-    let parsed = ever_block_json::db_serialize_block_ex(
+    let parsed = ton_dev_block_json::db_serialize_block_ex(
         "id",
         &set,
-        ever_block_json::SerializationMode::QServer,
+        ton_dev_block_json::SerializationMode::QServer,
     )
     .map_err(|err| Error::serialization_error(err, "block"))?;
 
@@ -188,7 +188,7 @@ pub fn parse_shardstate(
     let object =
         deserialize_object_from_boc::<ton_dev_block::ShardStateUnsplit>(&context, &params.boc, "shardstate")?;
 
-    let set = ever_block_json::ShardStateSerializationSet {
+    let set = ton_dev_block_json::ShardStateSerializationSet {
         boc: object.boc.bytes("shardstate")?,
         id: params.id,
         state: object.object,
@@ -197,10 +197,10 @@ pub fn parse_shardstate(
         ..Default::default()
     };
 
-    let parsed = ever_block_json::db_serialize_shard_state_ex(
+    let parsed = ton_dev_block_json::db_serialize_shard_state_ex(
         "id",
         &set,
-        ever_block_json::SerializationMode::QServer,
+        ton_dev_block_json::SerializationMode::QServer,
     )
     .map_err(|err| Error::serialization_error(err, "shardstate"))?;
 

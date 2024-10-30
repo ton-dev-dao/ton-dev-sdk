@@ -43,7 +43,7 @@ pub use send_messages::{
     send_messages, send_messages_api, MessageSendingParams, ParamsOfSendMessages,
     ResultOfSendMessages,
 };
-pub use ever_client_processing::{
+pub use ton_dev_client_processing::{
     MessageMonitoringParams, MessageMonitoringResult, MessageMonitoringStatus,
     MessageMonitoringTransaction, MessageMonitoringTransactionCompute, MonitorFetchWaitMode,
     MonitoredMessage, MonitoringQueueInfo,

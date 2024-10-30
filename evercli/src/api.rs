@@ -16,7 +16,7 @@ use crate::command_line::CommandLine;
 use crate::errors::{CliError, CliResult};
 use api_info::{Field, Function, Module, Type, API};
 use std::sync::Arc;
-use ever_client::ClientContext;
+use ton_dev_client::ClientContext;
 
 fn find_type<'a>(
     name: &str,
@@ -145,7 +145,7 @@ fn reduce_api(api: &API) -> API {
 
 fn get_api() -> CliResult<API> {
     let context = Arc::new(ClientContext::new(Default::default())?);
-    let api = ever_client::client::get_api_reference(context)?.api;
+    let api = ton_dev_client::client::get_api_reference(context)?.api;
     Ok(reduce_api(&api))
 }
 

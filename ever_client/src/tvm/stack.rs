@@ -21,8 +21,8 @@ use serde_json::Value;
 use ton_dev_block::BuilderData;
 use std::ops::Deref;
 use std::slice::Iter;
-use ever_vm::stack::{continuation::ContinuationData, integer::IntegerData};
-use ever_vm::stack::StackItem;
+use ton_dev_vm::stack::{continuation::ContinuationData, integer::IntegerData};
+use ton_dev_vm::stack::StackItem;
 
 enum ProcessingResult<'a> {
     Serialized(Value),

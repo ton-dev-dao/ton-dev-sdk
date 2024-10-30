@@ -20,7 +20,7 @@ use crate::boc::internal::{
 };
 use crate::error::ClientResult;
 use crate::ClientContext;
-use ever_struct::scheme::TVC;
+use ton_dev_struct::scheme::TVC;
 use ton_dev_block::{StateInit, Deserializable};
 use ton_dev_block::Cell;
 

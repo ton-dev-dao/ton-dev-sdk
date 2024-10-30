@@ -1,7 +1,7 @@
 use crate::error::ClientResult;
 use crate::ClientContext;
 use std::sync::Arc;
-use ever_client_processing::{
+use ton_dev_client_processing::{
     MessageMonitoringParams, MessageMonitoringResult, MonitorFetchWaitMode, MonitoringQueueInfo,
 };
 

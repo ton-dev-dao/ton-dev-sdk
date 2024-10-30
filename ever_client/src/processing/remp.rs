@@ -14,7 +14,7 @@ pub fn deserialize_json_from_string<'de, D>(d: D) -> Result<serde_json::Value, D
 where
     D: serde::Deserializer<'de>,
 {
-    let string = d.deserialize_option(ever_sdk::json_helper::StringVisitor)?;
+    let string = d.deserialize_option(ton_dev_sdk::json_helper::StringVisitor)?;
 
     if "null" == string {
         Ok(serde_json::Value::Null)

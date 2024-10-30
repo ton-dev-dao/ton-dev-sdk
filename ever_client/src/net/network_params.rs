@@ -23,7 +23,7 @@ use crate::{
 };
 use std::sync::Arc;
 use ton_dev_block::{Deserializable, GlobalCapabilities};
-use ever_executor::BlockchainConfig;
+use ton_dev_executor::BlockchainConfig;
 
 #[derive(Serialize, Deserialize, ApiType, Default, Clone)]
 pub struct ResultOfGetSignatureId {

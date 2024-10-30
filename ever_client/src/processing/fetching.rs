@@ -16,7 +16,7 @@ use serde_json::Value;
 use std::convert::TryFrom;
 use std::sync::Arc;
 use ton_dev_block::MsgAddressInt;
-use ever_sdk::Block;
+use ton_dev_sdk::Block;
 
 pub async fn fetch_next_shard_block<F: futures::Future<Output = ()> + Send>(
     context: &Arc<ClientContext>,
@@ -160,7 +160,7 @@ pub(crate) async fn fetch_account(
 
 #[derive(Deserialize)]
 struct AccountBalance {
-    #[serde(with = "ever_sdk::json_helper::uint")]
+    #[serde(with = "ton_dev_sdk::json_helper::uint")]
     balance: u64,
 }
 
@@ -197,7 +197,7 @@ pub async fn fetch_transaction_result(
     };
     let transaction_object = deserialize_object_from_base64(&transaction_boc.boc, "transaction")?;
 
-    let transaction = ever_sdk::Transaction::try_from(&transaction_object.object)
+    let transaction = ton_dev_sdk::Transaction::try_from(&transaction_object.object)
         .map_err(|err| crate::tvm::Error::can_not_read_transaction(err))?;
 
     let local_result = if transaction.is_aborted() {

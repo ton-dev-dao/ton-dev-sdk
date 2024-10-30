@@ -16,7 +16,7 @@ use crate::client::ClientContext;
 use crate::error::{AddNetworkUrl, ClientResult};
 use serde_json::Value;
 use std::sync::Arc;
-use ever_client_processing::{MessageMonitoringParams, MonitoredMessage};
+use ton_dev_client_processing::{MessageMonitoringParams, MonitoredMessage};
 
 #[derive(Serialize, Deserialize, ApiType, Default, Debug, Clone)]
 pub struct MessageSendingParams {

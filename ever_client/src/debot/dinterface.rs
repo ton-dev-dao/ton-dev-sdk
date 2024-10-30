@@ -14,11 +14,11 @@ use serde_json::Value;
 use std::collections::HashMap;
 use std::sync::Arc;
 pub type InterfaceResult = Result<(u32, Value), String>;
-use ever_abi::{Contract, ParamType};
+use ton_dev_abi::{Contract, ParamType};
 
 use crate::boc::internal::deserialize_cell_from_boc;
-use ever_sdk::AbiContract;
-use ever_abi::token::Detokenizer;
+use ton_dev_sdk::AbiContract;
+use ton_dev_abi::token::Detokenizer;
 
 fn decode_msg(
     client: TonClient,

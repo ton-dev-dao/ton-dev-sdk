@@ -113,6 +113,6 @@ pub fn get_address_type(
 
 #[cfg(test)]
 pub fn abi_uint(n: u128, size: usize) -> serde_json::Value {
-    serde_json::to_value(ever_abi::TokenValue::Uint(ever_abi::Uint::new(n, size)))
+    serde_json::to_value(ton_dev_abi::TokenValue::Uint(ton_dev_abi::Uint::new(n, size)))
         .unwrap_or(Default::default())
 }

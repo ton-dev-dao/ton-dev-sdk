@@ -74,7 +74,7 @@ fn update_initial_data_internal(
         Some(init_data) => {
             let abi = abi.json_string()?;
             let data = slice_from_cell(data)?;
-            ever_abi::json_abi::update_contract_data(&abi, &init_data.to_string(), data)
+            ton_dev_abi::json_abi::update_contract_data(&abi, &init_data.to_string(), data)
                 .map_err(|err| Error::encode_init_data_failed(err))?
                 .into_cell()
         }
@@ -88,7 +88,7 @@ fn update_initial_data_internal(
                 .try_into()
                 .map_err(|vec: Vec<u8>| Error::encode_init_data_failed(format!("invalid public key size {}", vec.len())))?;
             Ok(
-                ever_abi::Contract::insert_pubkey(data, &pubkey)
+                ton_dev_abi::Contract::insert_pubkey(data, &pubkey)
                     .map_err(|err| Error::encode_init_data_failed(err))?
                     .into_cell(),
             )
@@ -98,7 +98,7 @@ fn update_initial_data_internal(
 }
 
 fn default_init_data() -> ClientResult<Cell> {
-    ever_abi::Contract::insert_pubkey(Default::default(), &[0; ton_dev_block::ED25519_PUBLIC_KEY_LENGTH])
+    ton_dev_abi::Contract::insert_pubkey(Default::default(), &[0; ton_dev_block::ED25519_PUBLIC_KEY_LENGTH])
         .map_err(|err| Error::encode_init_data_failed(err))
         .map(SliceData::into_cell)
 }
@@ -137,7 +137,7 @@ pub fn encode_initial_data(
         if params.initial_pubkey.is_some() {
             return Err(Error::initial_pubkey_not_supported(abi.version()));
         }
-        builder_to_cell(ever_abi::json_abi::encode_storage_fields(
+        builder_to_cell(ton_dev_abi::json_abi::encode_storage_fields(
                 &params.abi.json_string()?,
                 params.initial_data.map(|data| data.to_string()).as_deref(),
             )
@@ -204,10 +204,10 @@ pub fn decode_initial_data(
         .decode_data(data.clone(), params.allow_partial)
         .map_err(|e| Error::invalid_data_for_decode(e))?;
 
-    let initial_data = ever_abi::token::Detokenizer::detokenize_to_json_value(&tokens)
+    let initial_data = ton_dev_abi::token::Detokenizer::detokenize_to_json_value(&tokens)
         .map_err(|e| Error::invalid_data_for_decode(e))?;
 
-    let initial_pubkey = ever_abi::Contract::get_pubkey(&data)
+    let initial_pubkey = ton_dev_abi::Contract::get_pubkey(&data)
         .map_err(|e| Error::invalid_data_for_decode(e))?
         .ok_or_else(|| Error::invalid_data_for_decode("no public key in contract data"))?;
 

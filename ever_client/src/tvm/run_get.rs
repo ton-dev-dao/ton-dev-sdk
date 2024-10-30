@@ -21,8 +21,8 @@ use crate::crypto::internal::ton_crc16;
 use crate::error::ClientResult;
 use crate::tvm::Error;
 use std::sync::Arc;
-use ever_vm::stack::integer::IntegerData;
-use ever_vm::stack::{Stack, StackItem};
+use ton_dev_vm::stack::integer::IntegerData;
+use ton_dev_vm::stack::{Stack, StackItem};
 
 #[derive(Serialize, Deserialize, ApiType, Default, Clone)]
 pub struct ParamsOfRunGet {

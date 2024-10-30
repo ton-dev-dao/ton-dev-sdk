@@ -20,15 +20,15 @@ use ton_dev_block::{
     Message, MsgAddressInt, OutAction, OutActions, Serializable,
 };
 use ton_dev_block::{Cell, HashmapType, SliceData, UInt256};
-use ever_vm::{
+use ton_dev_vm::{
     executor::{gas::gas_state::Gas, Engine},
     stack::{integer::IntegerData, savelist::SaveList, Stack, StackItem},
 };
 
 
 // for debugging getters
-// use ever_vm::executor::EngineTraceInfo;
-// use ever_vm::executor::EngineTraceInfoType;
+// use ton_dev_vm::executor::EngineTraceInfo;
+// use ton_dev_vm::executor::EngineTraceInfoType;
 // fn trace_callback(_engine: &Engine, info: &EngineTraceInfo, extended: bool) {
 //     if info.info_type == EngineTraceInfoType::Dump {
 //         println!("{}", info.cmd_str);
@@ -109,7 +109,7 @@ pub(crate) fn call_tvm(
 
     match engine.execute() {
         Err(err) => {
-            let exception = ever_vm::error::tvm_exception(err)
+            let exception = ton_dev_vm::error::tvm_exception(err)
                 .map_err(|err| Error::unknown_execution_error(err))?;
             let code = if let Some(code) = exception.custom_code() {
                 code
@@ -151,13 +151,13 @@ pub(crate) fn call_tvm_msg(
     let mut stack = Stack::new();
     let balance = account.balance().map_or(0, |cc| cc.grams.as_u128());
     let function_selector = match msg.header() {
-        CommonMsgInfo::IntMsgInfo(_) => ever_vm::int!(0),
-        CommonMsgInfo::ExtInMsgInfo(_) => ever_vm::int!(-1),
+        CommonMsgInfo::IntMsgInfo(_) => ton_dev_vm::int!(0),
+        CommonMsgInfo::ExtInMsgInfo(_) => ton_dev_vm::int!(-1),
         CommonMsgInfo::ExtOutMsgInfo(_) => return Err(Error::invalid_message_type()),
     };
     stack
-        .push(ever_vm::int!(balance)) // token balance of contract
-        .push(ever_vm::int!(0)) // token balance of msg
+        .push(ton_dev_vm::int!(balance)) // token balance of contract
+        .push(ton_dev_vm::int!(0)) // token balance of msg
         .push(StackItem::Cell(msg_cell.into())) // message
         .push(StackItem::Slice(msg.body().unwrap_or_default())) // message body
         .push(function_selector); // function selector
@@ -217,9 +217,9 @@ fn build_contract_info(
     tr_lt: u64,
     code: Cell,
     init_code_hash: Option<&UInt256>,
-) -> ever_vm::SmartContractInfo {
+) -> ton_dev_vm::SmartContractInfo {
     let mut info =
-        ever_vm::SmartContractInfo::with_myself(
+        ton_dev_vm::SmartContractInfo::with_myself(
             address.serialize().and_then(|cell| SliceData::load_cell(cell)).unwrap_or_default()
         );
     info.block_lt = block_lt;

@@ -1,7 +1,7 @@
 use crate::abi::DecodedMessageBody;
 use crate::error::ClientError;
 use serde_json::Value;
-use ever_sdk::TransactionFees;
+use ton_dev_sdk::TransactionFees;
 
 #[derive(Serialize, Deserialize, ApiType, Default, Debug, PartialEq, Clone)]
 pub struct DecodedOutput {

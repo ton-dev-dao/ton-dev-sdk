@@ -28,7 +28,7 @@ use crate::tvm::{run_tvm, ParamsOfRunTvm};
 use crate::{ClientConfig, ClientContext};
 use std::collections::VecDeque;
 use std::sync::Arc;
-use ever_abi::Contract;
+use ton_dev_abi::Contract;
 
 const EMPTY_CELL: &'static str = "te6ccgEBAQEAAgAAAA==";
 

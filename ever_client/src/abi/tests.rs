@@ -25,14 +25,14 @@ use crate::{
 use std::future::Future;
 
 use crate::boc::tvc::resolve_state_init_cell;
-use ever_struct::scheme::TVC;
+use ton_dev_struct::scheme::TVC;
 use serde_json::Value;
 use std::io::Cursor;
-use ever_abi::{Contract, PublicKeyData};
+use ton_dev_abi::{Contract, PublicKeyData};
 use ton_dev_block::{
     CurrencyCollection, Deserializable, InternalMessageHeader, Message, Serializable, StateInit,
 };
-use ever_sdk::ContractImage;
+use ton_dev_sdk::ContractImage;
 use ton_dev_block::{BuilderData, IBitstring, Result};
 
 use super::*;

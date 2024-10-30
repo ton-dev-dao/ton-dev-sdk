@@ -17,7 +17,7 @@ use crate::tvm::ErrorCode as TvmErrorCode;
 use crate::tvm::{AccountForExecutor, ParamsOfRunExecutor, ResultOfRunExecutor};
 use crate::utils::conversion::abi_uint;
 use api_info::ApiModule;
-use ever_struct::scheme::TVC;
+use ton_dev_struct::scheme::TVC;
 use ton_dev_block::{Serializable, StateInit};
 
 fn processing_event_name(e: Option<&ProcessingEvent>) -> &str {

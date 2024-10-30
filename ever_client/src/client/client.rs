@@ -17,7 +17,7 @@ use std::collections::HashMap;
 use std::sync::atomic::{AtomicU32, Ordering};
 use std::sync::Arc;
 use tokio::sync::{oneshot, Mutex, RwLock};
-use ever_client_processing::MessageMonitor;
+use ton_dev_client_processing::MessageMonitor;
 
 #[cfg(not(feature = "wasm-base"))]
 use super::std_client_env::ClientEnv;
@@ -48,7 +48,7 @@ pub struct Boxes {
 
 #[derive(Clone, Default)]
 pub(crate) struct NetworkParams {
-    pub(crate) blockchain_config: Arc<ever_executor::BlockchainConfig>,
+    pub(crate) blockchain_config: Arc<ton_dev_executor::BlockchainConfig>,
     pub(crate) global_id: i32,
 }
 

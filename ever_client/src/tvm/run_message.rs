@@ -28,12 +28,12 @@ use serde_json::Value;
 use std::convert::TryFrom;
 use std::sync::{atomic::AtomicU64, Arc};
 use ton_dev_block::{Account, CurrencyCollection, Message, MsgAddressInt, Serializable, Transaction};
-use ever_executor::{
+use ton_dev_executor::{
     ExecuteParams, ExecutorError, OrdinaryTransactionExecutor, TransactionExecutor,
 };
-use ever_sdk::TransactionFees;
+use ton_dev_sdk::TransactionFees;
 use ton_dev_block::{Cell, UInt256};
-use ever_vm::stack::StackItem;
+use ton_dev_vm::stack::StackItem;
 
 #[derive(Serialize, Deserialize, ApiType, Debug, Clone)]
 #[serde(tag = "type")]
@@ -281,7 +281,7 @@ pub async fn run_executor_internal(
     )
     .await?;
 
-    let sdk_transaction = ever_sdk::Transaction::try_from(&transaction)
+    let sdk_transaction = ton_dev_sdk::Transaction::try_from(&transaction)
         .map_err(|err| Error::can_not_read_transaction(err))?;
 
     let fees = calc_transaction_fees(

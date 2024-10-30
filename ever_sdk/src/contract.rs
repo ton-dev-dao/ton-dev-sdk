@@ -17,10 +17,10 @@ use crate::{AbiContract, MessageId};
 
 use chrono::prelude::Utc;
 use serde_json::Value;
-use ever_abi::PublicKeyData;
+use ton_dev_abi::PublicKeyData;
 use std::convert::{Into, TryInto};
 use std::io::{Read, Seek};
-use ever_abi::json_abi::DecodedMessage;
+use ton_dev_abi::json_abi::DecodedMessage;
 use ton_dev_block::{AccountIdPrefixFull, Deserializable, ExternalInboundMessageHeader, GetRepresentationHash,
     Message as TvmMessage, MsgAddressInt, Serializable, ShardIdent, StateInit,
     InternalMessageHeader, CurrencyCollection};
@@ -176,14 +176,14 @@ impl ContractImage {
     ///Allows to change initial values for public contract variables
     pub fn update_data(&mut self, data_map_supported: bool, data_json: &str, abi_json: &str) -> Result<()> {
         let new_data = if data_map_supported {
-            ever_abi::json_abi::update_contract_data(
+            ton_dev_abi::json_abi::update_contract_data(
                 abi_json,
                 data_json,
                 SliceData::load_cell(self.state_init.data.clone().unwrap_or_default())?,
             )?
             .into_cell()
         } else {
-            ever_abi::json_abi::encode_storage_fields(abi_json, Some(data_json))?
+            ton_dev_abi::json_abi::encode_storage_fields(abi_json, Some(data_json))?
                 .into_cell()?
         };
 
@@ -215,7 +215,7 @@ impl Contract {
         internal: bool,
         allow_partial: bool,
     ) -> Result<String> {
-        ever_abi::json_abi::decode_function_response(
+        ton_dev_abi::json_abi::decode_function_response(
             abi,
             function,
             response,
@@ -244,7 +244,7 @@ impl Contract {
         internal: bool,
         allow_partial: bool,
     ) -> Result<DecodedMessage> {
-        ever_abi::json_abi::decode_unknown_function_response(abi, response, internal, allow_partial)
+        ton_dev_abi::json_abi::decode_unknown_function_response(abi, response, internal, allow_partial)
     }
 
     /// Decodes output parameters returned by contract function call from serialized message body
@@ -266,7 +266,7 @@ impl Contract {
         internal: bool,
         allow_partial: bool,
     ) -> Result<DecodedMessage> {
-        ever_abi::json_abi::decode_unknown_function_call(abi, response, internal, allow_partial)
+        ton_dev_abi::json_abi::decode_unknown_function_call(abi, response, internal, allow_partial)
     }
 
     /// Decodes output parameters returned by contract function call from serialized message body
@@ -292,7 +292,7 @@ impl Contract {
         key_pair: Option<&Ed25519PrivateKey>,
     ) -> Result<SdkMessage> {
         // pack params into bag of cells via ABI
-        let msg_body = ever_abi::encode_function_call(
+        let msg_body = ton_dev_abi::encode_function_call(
             &params.abi,
             &params.func,
             params.header.as_deref(),
@@ -327,7 +327,7 @@ impl Contract {
         params: &FunctionCallSet,
     ) -> Result<SdkMessage> {
         // pack params into bag of cells via ABI
-        let msg_body = ever_abi::encode_function_call(
+        let msg_body = ton_dev_abi::encode_function_call(
             &params.abi,
             &params.func,
             None,
@@ -380,7 +380,7 @@ impl Contract {
         params: &FunctionCallSet,
     ) -> Result<MessageToSign> {
         // pack params into bag of cells via ABI
-        let (msg_body, data_to_sign) = ever_abi::prepare_function_call_for_sign(
+        let (msg_body, data_to_sign) = ton_dev_abi::prepare_function_call_for_sign(
             &params.abi,
             &params.func,
             params.header.as_deref(),
@@ -408,7 +408,7 @@ impl Contract {
         key_pair: Option<&Ed25519PrivateKey>,
         workchain_id: i32,
     ) -> Result<SdkMessage> {
-        let msg_body = ever_abi::encode_function_call(
+        let msg_body = ton_dev_abi::encode_function_call(
             &params.abi,
             &params.func,
             params.header.as_deref(),
@@ -482,7 +482,7 @@ impl Contract {
         image: ContractImage,
         workchain_id: i32,
     ) -> Result<MessageToSign> {
-        let (msg_body, data_to_sign) = ever_abi::prepare_function_call_for_sign(
+        let (msg_body, data_to_sign) = ton_dev_abi::prepare_function_call_for_sign(
             &params.abi,
             &params.func,
             params.header.as_deref(),
@@ -510,7 +510,7 @@ impl Contract {
         bounce: bool,
         value: CurrencyCollection,
     ) -> Result<Vec<u8>> {
-        let msg_body = ever_abi::encode_function_call(
+        let msg_body = ton_dev_abi::encode_function_call(
             &params.abi,
             &params.func,
             None,
@@ -551,7 +551,7 @@ impl Contract {
             msg: "No message body".to_owned()
         }))?;
 
-        let signed_body = ever_abi::add_sign_to_function_call(
+        let signed_body = ton_dev_abi::add_sign_to_function_call(
             abi,
             signature.try_into()?,
             public_key.map(|slice| slice.try_into()).transpose()?,

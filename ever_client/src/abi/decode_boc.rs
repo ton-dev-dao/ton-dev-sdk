@@ -8,7 +8,7 @@ use serde_json;
 use serde_json::Value;
 use std::convert::TryInto;
 use std::sync::Arc;
-use ever_abi::token::Detokenizer;
+use ton_dev_abi::token::Detokenizer;
 
 #[derive(Serialize, Deserialize, ApiType, Default)]
 pub struct ParamsOfDecodeBoc {
@@ -59,10 +59,10 @@ pub fn decode_boc(
         abi_params.push(param.try_into()?)
     }
 
-    let tokens = ever_abi::TokenValue::decode_params(
+    let tokens = ton_dev_abi::TokenValue::decode_params(
         &abi_params,
         slice_from_cell(data)?,
-        &ever_abi::contract::MAX_SUPPORTED_VERSION,
+        &ton_dev_abi::contract::MAX_SUPPORTED_VERSION,
         params.allow_partial
     )
         .map_err(|e| Error::invalid_data_for_decode(e))?;

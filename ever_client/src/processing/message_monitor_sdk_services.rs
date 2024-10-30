@@ -6,7 +6,7 @@ use serde_json::Value;
 use std::future::Future;
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::Arc;
-use ever_client_processing::{
+use ton_dev_client_processing::{
     MessageMonitorSdkServices, MessageMonitoringParams, MessageMonitoringResult,
     MessageMonitoringStatus, MessageMonitoringTransaction, MessageMonitoringTransactionCompute,
     MonitoredMessage, NetSubscription,
@@ -48,7 +48,7 @@ impl SdkServices {
     }
 }
 
-impl From<ClientError> for ever_client_processing::Error {
+impl From<ClientError> for ton_dev_client_processing::Error {
     fn from(value: ClientError) -> Self {
         Self {
             code: value.code,
@@ -58,8 +58,8 @@ impl From<ClientError> for ever_client_processing::Error {
     }
 }
 
-impl From<ever_client_processing::Error> for ClientError {
-    fn from(value: ever_client_processing::Error) -> Self {
+impl From<ton_dev_client_processing::Error> for ClientError {
+    fn from(value: ton_dev_client_processing::Error) -> Self {
         Self {
             code: value.code,
             message: value.message,
@@ -70,7 +70,7 @@ impl From<ever_client_processing::Error> for ClientError {
 
 fn deserialize_subscription_data(
     value: ResultOfSubscription,
-) -> ever_client_processing::Result<Vec<MessageMonitoringResult>> {
+) -> ton_dev_client_processing::Result<Vec<MessageMonitoringResult>> {
     let result = value.result;
     if result.is_null() {
         return Ok(vec![]);
@@ -89,11 +89,11 @@ impl MessageMonitorSdkServices for SdkServices {
     async fn subscribe_for_recent_ext_in_message_statuses<F: Future<Output = ()> + Send>(
         &self,
         messages: Vec<MessageMonitoringParams>,
-        callback: impl Fn(ever_client_processing::Result<Vec<MessageMonitoringResult>>) -> F
+        callback: impl Fn(ton_dev_client_processing::Result<Vec<MessageMonitoringResult>>) -> F
             + Send
             + Sync
             + 'static,
-    ) -> ever_client_processing::Result<NetSubscription> {
+    ) -> ton_dev_client_processing::Result<NetSubscription> {
         // We have to wrap callback into Arc because it will move out of closure scope
         let callback = Arc::new(callback);
         let (query, vars) = Self::subscription(messages);
@@ -144,7 +144,7 @@ impl MessageMonitorSdkServices for SdkServices {
     async fn unsubscribe(
         &self,
         subscription: NetSubscription,
-    ) -> ever_client_processing::Result<()> {
+    ) -> ton_dev_client_processing::Result<()> {
         Ok(self.net.unsubscribe(subscription.0 as u32).await?)
     }
 
@@ -152,7 +152,7 @@ impl MessageMonitorSdkServices for SdkServices {
         self.net.env.spawn(future);
     }
 
-    async fn sleep(&self, ms: u64) -> ever_client_processing::Result<()> {
+    async fn sleep(&self, ms: u64) -> ton_dev_client_processing::Result<()> {
         self.net.env.set_timer(ms).await?;
         Ok(())
     }
@@ -161,7 +161,7 @@ impl MessageMonitorSdkServices for SdkServices {
         self.net.env.now_ms()
     }
 
-    fn cell_from_boc(&self, boc: &str, name: &str) -> ever_client_processing::Result<Cell> {
+    fn cell_from_boc(&self, boc: &str, name: &str) -> ton_dev_client_processing::Result<Cell> {
         let (_, cell) = self.bocs.deserialize_cell(boc, name)?;
         Ok(cell)
     }

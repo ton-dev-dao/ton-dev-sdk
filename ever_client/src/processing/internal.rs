@@ -7,7 +7,7 @@ use crate::processing::Error;
 use crate::tvm::{AccountForExecutor, ExecutionOptions, ParamsOfRunExecutor};
 use std::sync::Arc;
 use ton_dev_block::MsgAddressInt;
-use ever_sdk::{Block, MessageId};
+use ton_dev_sdk::{Block, MessageId};
 
 const ACCOUNT_NONEXIST: u8 = 3;
 

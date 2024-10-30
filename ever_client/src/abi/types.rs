@@ -1,15 +1,15 @@
 use std::convert::TryInto;
 use std::sync::Arc;
 
-use ever_abi::{Param, ParamType, Token, TokenValue};
-use ever_abi::contract::AbiVersion;
-use ever_abi::token::{Cursor, Detokenizer};
+use ton_dev_abi::{Param, ParamType, Token, TokenValue};
+use ton_dev_abi::contract::AbiVersion;
+use ton_dev_abi::token::{Cursor, Detokenizer};
 use ton_dev_block::{HashmapE, HashmapType, Serializable, SliceData, fail, BuilderData};
 use ton_dev_block::Result;
-use ever_vm::int;
-use ever_vm::stack::integer::IntegerData;
-use ever_vm::stack::integer::serialization::{UnsignedIntegerBigEndianEncoding, SignedIntegerBigEndianEncoding};
-use ever_vm::stack::StackItem;
+use ton_dev_vm::int;
+use ton_dev_vm::stack::integer::IntegerData;
+use ton_dev_vm::stack::integer::serialization::{UnsignedIntegerBigEndianEncoding, SignedIntegerBigEndianEncoding};
+use ton_dev_vm::stack::StackItem;
 use num_bigint::{BigInt};
 use ton_dev_block::IBitstring;
 
@@ -49,8 +49,8 @@ impl Abi {
         }
     }
 
-    pub fn abi(&self) -> ClientResult<ever_abi::Contract> {
-        ever_abi::Contract::load(self.json_string()?.as_bytes())
+    pub fn abi(&self) -> ClientResult<ton_dev_abi::Contract> {
+        ton_dev_abi::Contract::load(self.json_string()?.as_bytes())
             .map_err(|x| Error::invalid_json(x))
     }
 }
@@ -117,10 +117,10 @@ pub struct AbiParam {
     pub init: bool,
 }
 
-impl TryInto<ever_abi::Param> for AbiParam {
+impl TryInto<ton_dev_abi::Param> for AbiParam {
     type Error = ClientError;
 
-    fn try_into(self) -> ClientResult<ever_abi::Param> {
+    fn try_into(self) -> ClientResult<ton_dev_abi::Param> {
         serde_json::from_value(
             serde_json::to_value(&self)
                 .map_err(|err| Error::invalid_json(err))?
@@ -246,7 +246,7 @@ impl TokenValueToStackItem {
             TokenValue::Int(v) => int!(v.number),
             TokenValue::VarInt(_, v) => int!(v),
             TokenValue::VarUint(_, v) => int!(v),
-            TokenValue::Bool(v) => ever_vm::boolean!(v),
+            TokenValue::Bool(v) => ton_dev_vm::boolean!(v),
             TokenValue::Tuple(values) => {
                 let mut res: Vec<StackItem> = vec![];
                 for token in values {

@@ -11,9 +11,9 @@ use crate::error::ClientResult;
 use serde_json::Value;
 use std::str::FromStr;
 use std::sync::Arc;
-use ever_abi::Contract;
+use ton_dev_abi::Contract;
 use ton_dev_block::{CurrencyCollection, MsgAddressInt};
-use ever_sdk::{ContractImage, FunctionCallSet};
+use ton_dev_sdk::{ContractImage, FunctionCallSet};
 use ton_dev_block::Cell;
 
 use super::types::extend_data_to_sign;
@@ -314,7 +314,7 @@ fn encode_deploy(
     let address = image.msg_address(workchain);
     Ok(match signer {
         Signer::None => {
-            let message = ever_sdk::Contract::construct_deploy_message_json(
+            let message = ton_dev_sdk::Contract::construct_deploy_message_json(
                 &call_set.to_function_call_set(
                     pubkey,
                     processing_try_index,
@@ -330,7 +330,7 @@ fn encode_deploy(
             (message.serialized_message, None, address)
         }
         _ => {
-            let unsigned = ever_sdk::Contract::get_deploy_message_bytes_for_signing(
+            let unsigned = ton_dev_sdk::Contract::get_deploy_message_bytes_for_signing(
                 &call_set.to_function_call_set(
                     pubkey,
                     processing_try_index,
@@ -359,7 +359,7 @@ fn encode_int_deploy(
     value: CurrencyCollection,
 ) -> ClientResult<(Vec<u8>, MsgAddressInt)> {
     let address = image.msg_address(workchain_id);
-    let message = ever_sdk::Contract::get_int_deploy_message_bytes(
+    let message = ton_dev_sdk::Contract::get_int_deploy_message_bytes(
         src,
         &call_set.to_function_call_set(None, None, &context, &abi, true)?,
         image,
@@ -378,11 +378,11 @@ fn encode_empty_deploy(
     workchain: i32,
 ) -> ClientResult<(Vec<u8>, Option<Vec<u8>>, MsgAddressInt)> {
     let address = image.msg_address(workchain);
-    let message = ever_sdk::Contract::construct_deploy_message_no_constructor(image, workchain)
+    let message = ton_dev_sdk::Contract::construct_deploy_message_no_constructor(image, workchain)
         .map_err(|x| Error::encode_deploy_message_failed(x))?;
 
     Ok((
-        ever_sdk::Contract::serialize_message(&message)
+        ton_dev_sdk::Contract::serialize_message(&message)
             .map_err(|x| Error::encode_deploy_message_failed(x))?
             .0,
         None,
@@ -399,7 +399,7 @@ fn encode_empty_int_deploy(
     value: CurrencyCollection,
 ) -> ClientResult<(Vec<u8>, MsgAddressInt)> {
     let address = image.msg_address(workchain_id);
-    let message = ever_sdk::Contract::construct_int_deploy_message_no_constructor(
+    let message = ton_dev_sdk::Contract::construct_int_deploy_message_no_constructor(
         src,
         image,
         workchain_id,
@@ -410,7 +410,7 @@ fn encode_empty_int_deploy(
     .map_err(|x| Error::encode_deploy_message_failed(x))?;
 
     Ok((
-        ever_sdk::Contract::serialize_message(&message)
+        ton_dev_sdk::Contract::serialize_message(&message)
             .map_err(|x| Error::encode_deploy_message_failed(x))?
             .0,
         address,
@@ -432,7 +432,7 @@ fn encode_run(
     let address = account_decode(address)?;
     Ok(match params.signer {
         Signer::None => {
-            let message = ever_sdk::Contract::construct_call_ext_in_message_json(
+            let message = ton_dev_sdk::Contract::construct_call_ext_in_message_json(
                 address.clone(),
                 &call_set.to_function_call_set(
                     pubkey,
@@ -447,7 +447,7 @@ fn encode_run(
             (message.serialized_message, None, address)
         }
         _ => {
-            let unsigned = ever_sdk::Contract::get_call_message_bytes_for_signing(
+            let unsigned = ton_dev_sdk::Contract::get_call_message_bytes_for_signing(
                 address.clone(),
                 &call_set.to_function_call_set(
                     pubkey,
@@ -707,7 +707,7 @@ pub fn encode_internal_message(
                 .abi
                 .ok_or_else(|| Error::invalid_abi("abi is undefined"))?
                 .json_string()?;
-            let message = ever_sdk::Contract::construct_call_int_message_json(
+            let message = ton_dev_sdk::Contract::construct_call_int_message_json(
                 address.clone(),
                 src_address,
                 ihr_disabled,
@@ -719,7 +719,7 @@ pub fn encode_internal_message(
 
             (message.serialized_message, address)
         } else {
-            let message = ever_sdk::Contract::construct_int_message_with_body(
+            let message = ton_dev_sdk::Contract::construct_int_message_with_body(
                 address.clone(),
                 src_address,
                 ihr_disabled,
@@ -815,7 +815,7 @@ pub async fn encode_message_body(
     let func = call.func.clone();
     let (body, data_to_sign) = match params.signer {
         Signer::None => {
-            let body = ever_abi::encode_function_call(
+            let body = ton_dev_abi::encode_function_call(
                 &abi,
                 &func,
                 call.header.as_deref(),
@@ -828,7 +828,7 @@ pub async fn encode_message_body(
             (body, None)
         }
         _ => if params.is_internal {
-            ever_abi::encode_function_call(
+            ton_dev_abi::encode_function_call(
                 &abi,
                 &func,
                 None,
@@ -839,7 +839,7 @@ pub async fn encode_message_body(
             )
             .map(|body| (body, None))
         } else {
-            ever_abi::prepare_function_call_for_sign(
+            ton_dev_abi::prepare_function_call_for_sign(
                 &abi,
                 &func,
                 call.header.as_deref(),

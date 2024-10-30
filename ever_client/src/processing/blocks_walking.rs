@@ -35,7 +35,7 @@ pub(crate) async fn find_last_shard_block(
     context: &Arc<ClientContext>,
     address: &MsgAddressInt,
     endpoint: Option<Endpoint>,
-) -> ClientResult<ever_sdk::BlockId> {
+) -> ClientResult<ton_dev_sdk::BlockId> {
     let workchain = address.get_workchain_id();
     let server_link = context.get_server_link()?;
 
@@ -127,7 +127,7 @@ pub(crate) async fn find_last_shard_block(
                     ))?;
 
             let shard_block =
-                ever_sdk::Contract::find_matching_shard(shards, address).map_err(|err| {
+                ton_dev_sdk::Contract::find_matching_shard(shards, address).map_err(|err| {
                     Error::invalid_data(format!("find matching shard failed {}", err))
                 })?;
             if shard_block.is_null() {
@@ -150,7 +150,7 @@ pub async fn wait_next_block(
     current: &str,
     address: &MsgAddressInt,
     timeout: Option<u32>,
-) -> ClientResult<ever_sdk::Block> {
+) -> ClientResult<ton_dev_sdk::Block> {
     let client = context.get_server_link()?;
 
     let block = client
@@ -204,6 +204,6 @@ fn check_shard_match(
     shard_descr: serde_json::Value,
     address: &MsgAddressInt,
 ) -> ClientResult<bool> {
-    ever_sdk::Contract::check_shard_match(shard_descr, address)
+    ton_dev_sdk::Contract::check_shard_match(shard_descr, address)
         .map_err(|err| Error::can_not_check_block_shard(err))
 }

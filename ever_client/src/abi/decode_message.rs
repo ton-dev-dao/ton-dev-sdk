@@ -6,9 +6,9 @@ use crate::client::ClientContext;
 use crate::error::ClientResult;
 use serde_json::Value;
 use std::sync::Arc;
-use ever_abi::contract::DecodedMessage;
-use ever_abi::token::Detokenizer;
-use ever_sdk::{AbiContract, AbiFunction, AbiEvent};
+use ton_dev_abi::contract::DecodedMessage;
+use ton_dev_abi::token::Detokenizer;
+use ton_dev_sdk::{AbiContract, AbiFunction, AbiEvent};
 use ton_dev_block::SliceData;
 
 use super::types::extend_data_to_sign;
@@ -215,7 +215,7 @@ fn decode_unknown_function(
         let input = abi.decode_input(body.clone(), is_internal, allow_partial)
             .map_err(|err| Error::invalid_message_for_decode(err))?;
         let (header, _, _) =
-            ever_abi::Function::decode_header(abi.version(), body.clone(), abi.header(), is_internal)
+            ton_dev_abi::Function::decode_header(abi.version(), body.clone(), abi.header(), is_internal)
                 .map_err(|err| {
                     Error::invalid_message_for_decode(format!(
                         "Can't decode function header: {}",
@@ -266,7 +266,7 @@ fn decode_with_function(
                 let decoded = function.decode_input(body.clone(), is_internal, allow_partial)
                     .map_err(|err| Error::invalid_message_for_decode(err))?;
                 let (header, _, _) =
-                    ever_abi::Function::decode_header(abi.version(), body.clone(), abi.header(), is_internal)
+                    ton_dev_abi::Function::decode_header(abi.version(), body.clone(), abi.header(), is_internal)
                         .map_err(|err| Error::invalid_message_for_decode(err))?;
                 DecodedMessageBody::new(
                     MessageBodyType::Input,
