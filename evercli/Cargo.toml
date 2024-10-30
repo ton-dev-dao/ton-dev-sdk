@@ -1,5 +1,4 @@
 [package]
-authors = [ 'EverX Labs Ltd <support@everx.dev>' ]
 description = 'TVM CLient Command Line Tool'
 documentation = 'https://docs.ton.dev'
 edition = '2018'

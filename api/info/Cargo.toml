@@ -1,5 +1,4 @@
 [package]
-authors = [ 'EverX Labs Ltd <support@everx.dev>' ]
 edition = '2018'
 name = 'api_info'
 version = '1.48.1'

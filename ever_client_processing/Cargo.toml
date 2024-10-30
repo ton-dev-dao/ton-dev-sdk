@@ -1,5 +1,4 @@
 [package]
-authors = [ 'EverX Labs Ltd <support@everx.dev>' ]
 edition = '2018'
 license = 'Apache-2.0'
 name = 'ton_dev_client_processing'
