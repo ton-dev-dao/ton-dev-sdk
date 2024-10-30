@@ -2,7 +2,7 @@
 authors = [ 'EverX Labs Ltd <support@everx.dev>' ]
 edition = '2018'
 license = 'Apache-2.0'
-name = 'ever_client_processing'
+name = 'ton_dev_client_processing'
 version = '1.48.1'
 
 [dependencies]
@@ -17,12 +17,12 @@ serde_repr = '0.1.7'
 tokio = { default-features = false, features = [ 'sync' ], version = '1.4' }
 api_derive = { path = '../api/derive' }
 api_info = { path = '../api/info' }
-ever_block = { git = 'https://github.com/ton-dev-dao/ton-dev-block.git', tag = '1.11.20' }
+ton_dev_block = { git = 'https://github.com/ton-dev-dao/ton-dev-block.git', tag = '1.11.20' }
 
 [dev-dependencies]
 tokio = { default-features = false, features = [ 'sync', 'rt-multi-thread', 'macros', 'time', 'net', 'fs' ], version = '1.4' }
 
 [lib]
 crate-type = [ 'cdylib', 'rlib', 'staticlib' ]
-name = 'ever_client_processing'
+name = 'ton_dev_client_processing'
 

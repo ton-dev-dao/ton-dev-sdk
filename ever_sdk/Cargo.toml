@@ -2,7 +2,7 @@
 authors = [ 'EverX Labs Ltd <support@everx.dev>' ]
 edition = '2018'
 license = 'Apache-2.0'
-name = 'ever_sdk'
+name = 'ton_dev_sdk'
 version = '1.48.1'
 
 [dependencies]
@@ -21,6 +21,6 @@ sha2 = '0.9'
 thiserror = '1.0'
 api_derive = { path = '../api/derive' }
 api_info = { path = '../api/info' }
-ever_abi = { git = 'https://github.com/ton-dev-dao/ton-dev-abi.git', tag = '2.7.11' }
-ever_block = { git = 'https://github.com/ton-dev-dao/ton-dev-block.git', tag = '1.11.20' }
+ton_dev_abi = { git = 'https://github.com/ton-dev-dao/ton-dev-abi.git', tag = '2.7.11' }
+ton_dev_block = { git = 'https://github.com/ton-dev-dao/ton-dev-block.git', tag = '1.11.20' }
 
