@@ -62,8 +62,8 @@ ton_dev_client_processing = { default-features = false, path = '../ton_dev_clien
 ton_dev_executor = { features = [ 'signature_with_id' ], git = 'https://github.com/ton-dev-dao/ton-dev-executor.git', tag = '1.18.22' }
 ton_dev_sdk = { default-features = false, path = '../ton_dev_sdk' }
 ton_dev_vm = { features = [ 'signature_with_id', 'signature_no_check' ], git = 'https://github.com/ton-dev-dao/ton-dev-vm.git', tag = '2.2.21' }
-lockfree = { git = 'https://github.com/everx-labs/lockfree.git', package = 'lockfree' }
-sodalite = { features = [ 'rand' ], git = 'https://github.com/everx-labs/sodalite.git' }
+lockfree = { git = 'https://github.com/ton-dev-dao/lockfree.git', package = 'lockfree' }
+sodalite = { features = [ 'rand' ], git = 'https://github.com/ton-dev-dao/sodalite.git' }
 
 [build-dependencies]
 serde = '1.0.117'
